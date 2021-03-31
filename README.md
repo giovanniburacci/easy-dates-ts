@@ -1,2 +1,1 @@
-# easy-dates-ts
-Manage your dates the easy way
+#this is just a test
