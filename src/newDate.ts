@@ -1,5 +1,5 @@
 import { easyDate,Format } from './types/types';
-import {formatSeparators,internationalRegex} from './management/config';
+import {formatSeparators,regexes} from './management/config';
 const DEFAULT:string="";
 
 const toValidNumber = (date:string):number => 
@@ -12,7 +12,7 @@ export const toDate = (date:string | Date): easyDate | undefined => {
         return toDate(new Date());
     }
     if(typeof date === 'string') {
-        if(date.match(internationalRegex) ) {
+        if(date.match(regexes.internationalRegex) ) {
             return {
                 format: Format.INTERNATIONAL,
                 year: toValidNumber(date.substring(0,4)),
