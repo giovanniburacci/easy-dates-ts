@@ -14,4 +14,3 @@ export enum Format {
     DAY_FIRST = 'YYYY/MM/DD'
 };
 
-export const formatSeparators:string[] = [];
