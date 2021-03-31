@@ -4,6 +4,9 @@
   "description": "helps you managing dates much better than vanilla ts",
   "main": "dist/index.js",
   "types": "dist/hello.d.ts",
+  "files": [
+    "/dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
