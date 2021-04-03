@@ -24,4 +24,4 @@ export const toDate = (date:string | Date): easyDate | undefined => {
 
 }
 
-console.log(toDate("1984-21-22"));
+console.log(toDate("1984--21--22"));
