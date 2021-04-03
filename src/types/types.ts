@@ -1,10 +1,8 @@
 
-export type easyDate = {
+export type EasyDate = {
     year?: number,
     month?: number,
     day?: number,
-    seconds?: number,
-    millisecond?: number,
     format: Format
 };
 
