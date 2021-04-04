@@ -6,7 +6,7 @@ const isLeapYear = (year:number):boolean =>
 
 export const isValidDate = (date:EasyDate):boolean => 
     date.month > 0 && date.month < 13 && (
-        isLeapYear(date.year) && date.month == 2 ?  date.day < 30 : date.day <= Object.values(MONTHS_DAYS)[date.month-1]
+        isLeapYear(date.year) && date.month == 2 ?  date.date < 30 : date.date <= Object.values(MONTHS_DAYS)[date.month-1]
         ) 
-        && date.day > 0
+        && date.date > 0
     

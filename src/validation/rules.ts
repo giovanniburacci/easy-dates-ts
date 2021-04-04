@@ -1,4 +1,3 @@
-
 export const MONTHS_DAYS =  {
     JANUARY : 31,
     FEBRUARY : 28,
@@ -15,6 +14,5 @@ export const MONTHS_DAYS =  {
     DECEMBER : 31
 }
 
-export const toValidNumber = (date:string):number => 
+export const toValidNumber = (date:string):number | undefined => 
                     date.charAt(0) === '0' ? Number(date.substring(1)) : Number(date);
-

@@ -2,13 +2,12 @@
 export type EasyDate = {
     year?: number,
     month?: number,
-    day?: number,
-    format: Format
+    date?: number,
 };
 
 export enum Format {
     USA = 'MM/DD/YYYY',
     INTERNATIONAL = 'YYYY/MM/DD',
-    DAY_FIRST = 'YYYY/MM/DD'
+    DAY_FIRST= 'DD/MM/YYYY'
 };
 
