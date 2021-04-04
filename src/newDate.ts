@@ -1,6 +1,6 @@
 import { EasyDate, Format } from './types/types';
 import {regexes,formatSeparators} from './management/config';
-import { isValidDate } from './validation/validation';
+import { countSumDates, isValidDate } from './validation/validation';
 import {toValidNumber} from './validation/rules'
 import {MONTHS_DAYS} from './validation/rules'
 const EMPTY_STRING:string="";
@@ -94,12 +94,13 @@ export const toDate = (date:string | Date, format?:Format): EasyDate | undefined
                 }
             }
             else if (date.match(regexes.yearLastRegex)) {
-                const intProps = format === Format.USA ? getUSAProps(date) : getDayFirstProps(date);
-                if(intProps !== undefined)
+                const yerLastProps = format === Format.USA ? getUSAProps(date) : getDayFirstProps(date);
+                if(yerLastProps !== undefined)
                 {
-                    if(intProps.year !== undefined && intProps.month !== undefined && intProps.date !== undefined){
+                    console.log('date', yerLastProps);
+                    if(yerLastProps.year !== undefined && yerLastProps.month !== undefined && yerLastProps.date !== undefined){
                         return {
-                            ...intProps
+                            ...yerLastProps
                         }
                     }
                 }
@@ -112,7 +113,8 @@ export const toDate = (date:string | Date, format?:Format): EasyDate | undefined
 }
 
 //returns an EasyDate which is the result of the passed arguments.
-// nb: months are calculated before days so the results may vary from method to method
+// nb: dates are calculated before months (I guess it's the most logic order)
+//so the results may vary from method to method
 export const addDates = (date1:EasyDate,date2:EasyDate):EasyDate => {
     let year:number = date1.year + date2.year;
 
@@ -143,22 +145,28 @@ export const addDates = (date1:EasyDate,date2:EasyDate):EasyDate => {
 }
 
 //returns an EasyDate which is the result of the subtraction between the passed paramaters. 
-// nb: months are calculated before days so the results may vary from method to method
+// nb: dates are calculated before months (I guess it's the most logic order)
+//so the results may vary from method to method
 export const subtractDates = (date1:EasyDate,date2:EasyDate):EasyDate => {
-
+    const sumDates = countSumDates(date2,{year:0});
     let year:number = date1.year - date2.year;
-
     let month:number,date:number;
-        
-    if(date1.month - date2.month < 1)
-    {
+
+    if(date1.month - date2.month < 1) {
         month = 12 - (date2.month - date1.month);
         year --;
     }
+    else {
+        month = date1.month - date2.month
+    }
 
-    if(date1.date - date2.date < 1 )
-    {
-        date = Object.values(MONTHS_DAYS)[month-1] - (date2.date - date1.date)
+    if(date1.date - date2.date < 1 ) {
+        date = Object.values(MONTHS_DAYS)[month] - (date2.date - date1.date) //- sumDates
+        month --;
+
+    }
+    else {
+        date=date1.date - date2.date
     }
 
     return {
@@ -193,5 +201,5 @@ export const cmpDates = (date1:EasyDate,date2:EasyDate):number =>
         )
 
 const date1 = toDate("3/12/2020");
-const date2=toDate("12/3/2019",Format.USA)
+const date2 = toDate("08/06/2019")
 console.log(subtractDates(date1,date2));
