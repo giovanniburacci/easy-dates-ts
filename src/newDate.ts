@@ -59,38 +59,11 @@ const getDayFirstProps = (date:string):EasyDate => {
     }
 }
 
-//this method is supposed to infer the format of a string generating an EasyDate, obviously with its own
-//limits. whenever there's a chance, it does what it's supposed to do.
-//the original format
-const inferFormat = (date:string,format?:Format): Format => {
-    for(let separator of formatSeparators) {
-        if(date.indexOf(separator) !== -1) {
-            const firstField = toValidNumber(date.substring(0,date.indexOf(separator)));
-            const secondField = toValidNumber(date.substring(date.indexOf(separator)+1,date.indexOf(separator)+3));
-            console.log(firstField,secondField)
-            if(firstField < 13 && secondField < Object.values(MONTHS_DAYS)[firstField]) {
-                return Format.USA;
-            }
-            else if(secondField < 13 && firstField < Object.values(MONTHS_DAYS)[secondField] ) {
-                return Format.DAY_FIRST;
-            }
-            
-            if(format) {
-                console.log("returning format");
-                return format;
-            }
-            else {
-                console.log("returning day first");
-                return Format.DAY_FIRST;
-            }
-        }
-    }
-}
 //returns an EasyDate from a well-formatted string. format parameter can be included to force the EasyDate
 //format to Format.USA or Format.DAY_FIRST, however every check will still be done to ensure the string
 //is properly correct and will eventually return undefined if not. format parameter will be ignored in case
 //of a well-formatted Format.INTERNATIONAL string. if format is missing and the string is not a 
-//Format.INTERNATIONAL, inferFormat() will try to infer it.
+//Format.INTERNATIONAL, Format.DAY_FIRST will be assigned to the EasyDate.
 //nb: in case of ambiguity, DAY_FIRST format will overwhelm.
 export const toDate = (date:string | Date, format?:Format): EasyDate | undefined => {
 
@@ -121,8 +94,7 @@ export const toDate = (date:string | Date, format?:Format): EasyDate | undefined
                 }
             }
             else if (date.match(regexes.yearLastRegex)) {
-                const inferredFormat:Format = format ? inferFormat(date,format) : inferFormat(date);
-                const intProps = inferredFormat === Format.USA ? getUSAProps(date) : getDayFirstProps(date)
+                const intProps = format === Format.USA ? getUSAProps(date) : getDayFirstProps(date);
                 if(intProps !== undefined)
                 {
                     if(intProps.year !== undefined && intProps.month !== undefined && intProps.date !== undefined){
@@ -220,5 +192,6 @@ export const cmpDates = (date1:EasyDate,date2:EasyDate):number =>
             )
         )
 
-const date = toDate("3/12/2020");
-console.log(date);
+const date1 = toDate("3/12/2020");
+const date2=toDate("12/3/2019",Format.USA)
+console.log(subtractDates(date1,date2));
