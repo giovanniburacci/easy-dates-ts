@@ -3,7 +3,7 @@ import {MONTHS_DAYS} from './rules'
 
 
 //checks whether it's a leap year
-const isLeapYear = (year:number):boolean => 
+export const isLeapYear = (year:number):boolean => 
                 (year % 100 == 0 && year % 400 == 0) || (year % 4 == 0 && year % 100 !== 0)
 
 
@@ -15,9 +15,8 @@ export const isValidDate = (date:EasyDate):boolean =>
         && date.date > 0
     
 //calculates how many leap years are there from a certain year to year 0
-const countLeapYears = (year:number):number =>
+export const countLeapYears = (year:number):number =>
                                         (year / 4)- (year / 100) + (year / 400)
-
 
 //calculates how many leap years are there between two dates
 export const countSumDates = (date1:EasyDate,date2:EasyDate) =>

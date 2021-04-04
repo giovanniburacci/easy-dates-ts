@@ -14,5 +14,6 @@ export const MONTHS_DAYS =  {
     DECEMBER : 31
 }
 
+//returns a valid number primitive even if first digit is 0
 export const toValidNumber = (date:string):number | undefined => 
                     date.charAt(0) === '0' ? Number(date.substring(1)) : Number(date);

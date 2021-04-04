@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "helps you managing dates much better than vanilla ts",
   "main": "dist/index.js",
-  "types": "dist/hello.d.ts",
+  "types": "dist/index.d.ts",
   "files": [
     "/dist",
     "src",

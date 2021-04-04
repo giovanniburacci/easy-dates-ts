@@ -1,6 +1,6 @@
 import { EasyDate, Format } from './types/types';
 import {regexes,formatSeparators} from './management/config';
-import { countSumDates, isValidDate } from './validation/validation';
+import { isValidDate } from './validation/validation';
 import {toValidNumber} from './validation/rules'
 import {MONTHS_DAYS} from './validation/rules'
 const EMPTY_STRING:string="";
@@ -97,7 +97,6 @@ export const toDate = (date:string | Date, format?:Format): EasyDate | undefined
                 const yerLastProps = format === Format.USA ? getUSAProps(date) : getDayFirstProps(date);
                 if(yerLastProps !== undefined)
                 {
-                    console.log('date', yerLastProps);
                     if(yerLastProps.year !== undefined && yerLastProps.month !== undefined && yerLastProps.date !== undefined){
                         return {
                             ...yerLastProps
@@ -148,7 +147,6 @@ export const addDates = (date1:EasyDate,date2:EasyDate):EasyDate => {
 // nb: dates are calculated before months (I guess it's the most logic order)
 //so the results may vary from method to method
 export const subtractDates = (date1:EasyDate,date2:EasyDate):EasyDate => {
-    const sumDates = countSumDates(date2,{year:0});
     let year:number = date1.year - date2.year;
     let month:number,date:number;
 
@@ -161,7 +159,7 @@ export const subtractDates = (date1:EasyDate,date2:EasyDate):EasyDate => {
     }
 
     if(date1.date - date2.date < 1 ) {
-        date = Object.values(MONTHS_DAYS)[month] - (date2.date - date1.date) //- sumDates
+        date = Object.values(MONTHS_DAYS)[month] - (date2.date - date1.date)
         month --;
 
     }
@@ -200,6 +198,7 @@ export const cmpDates = (date1:EasyDate,date2:EasyDate):number =>
             )
         )
 
-const date1 = toDate("3/12/2020");
-const date2 = toDate("08/06/2019")
-console.log(subtractDates(date1,date2));
+const date1 = toDate("03/02/0020");
+const date2 = toDate("3/2/0200");
+console.log(date1,date2);
+console.log(addDates(date1,date2));
